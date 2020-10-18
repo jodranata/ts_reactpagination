@@ -1,4 +1,5 @@
 import React from 'react';
+import PaginationContainer from './components/PaginationContainer';
 
 import './App.css';
 
@@ -7,6 +8,7 @@ const App = () => {
     <div className="App">
       <header>
         <h1>Template for Typescript - React App</h1>
+        <PaginationContainer />
       </header>
     </div>
   );
