@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import styles from '../styles/pagination.module.scss';
 
@@ -16,13 +16,15 @@ const Pagination = ({
   return (
     <div className={styles.pagination}>
       <div className={styles.paginationWrapper}>
-        <button
-          onClick={() => handlePagination(page - 1)}
-          type="button"
-          className={classNames([styles.pageItem, styles.sides].join(' '))}
-        >
-          &lt;
-        </button>
+        {page !== 1 && (
+          <button
+            onClick={() => handlePagination(page - 1)}
+            type="button"
+            className={classNames([styles.pageItem, styles.sides].join(' '))}
+          >
+            &lt;
+          </button>
+        )}
         <button
           onClick={() => handlePagination(1)}
           type="button"
@@ -30,29 +32,46 @@ const Pagination = ({
         >
           {1}
         </button>
-        <div className={styles.separator}>...</div>
-        <button
-          onClick={() => handlePagination(page - 1)}
-          type="button"
-          className={styles.pageItem}
-        >
-          {page - 1}
-        </button>
-        <button
-          onClick={() => handlePagination(page)}
-          type="button"
-          className={[styles.pageItem, styles.active].join(' ')}
-        >
-          {page}
-        </button>
-        <button
-          onClick={() => handlePagination(page + 1)}
-          type="button"
-          className={styles.pageItem}
-        >
-          {page + 1}
-        </button>
-        <div className={styles.separator}>...</div>
+        {page > 3 && <div className={styles.separator}>...</div>}
+        {page === totalPages && totalPages > 3 && (
+          <button
+            onClick={() => handlePagination(page - 2)}
+            type="button"
+            className={styles.pageItem}
+          >
+            {page - 2}
+          </button>
+        )}
+        {page > 2 && (
+          <button
+            onClick={() => handlePagination(page - 1)}
+            type="button"
+            className={styles.pageItem}
+          >
+            {page - 1}
+          </button>
+        )}
+
+        {page !== 1 && page !== totalPages && (
+          <button
+            onClick={() => handlePagination(page)}
+            type="button"
+            className={[styles.pageItem, styles.active].join(' ')}
+          >
+            {page}
+          </button>
+        )}
+        {page < totalPages - 1 && (
+          <button
+            onClick={() => handlePagination(page + 1)}
+            type="button"
+            className={styles.pageItem}
+          >
+            {page + 1}
+          </button>
+        )}
+        {page < totalPages - 2 && <div className={styles.separator}>...</div>}
+
         <button
           onClick={() => handlePagination(totalPages)}
           type="button"
@@ -62,13 +81,16 @@ const Pagination = ({
         >
           {totalPages}
         </button>
-        <button
-          onClick={() => handlePagination(page + 1)}
-          type="button"
-          className={[styles.pageItem, styles.sides].join(' ')}
-        >
-          &gt;
-        </button>
+
+        {page !== totalPages && (
+          <button
+            onClick={() => handlePagination(page + 1)}
+            type="button"
+            className={[styles.pageItem, styles.sides].join(' ')}
+          >
+            &gt;
+          </button>
+        )}
       </div>
     </div>
   );
